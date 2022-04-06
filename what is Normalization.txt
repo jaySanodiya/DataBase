@@ -1,0 +1,16 @@
+--------What is normalization and why it is needed?-----------
+
+* Normalization is process of organization of data in database.
+
+* It consist of some forms of normalization like :-
+      first normal form (1NF)
+      second normal form (2NF) 
+      third normal form (3NF)
+      boyce & codd normal form (BCNF)
+      and few more...
+
+* Normalization is needed because it solve the problem of redundency(duplicate entry), insertion   anomaly, update anomaly and deletion anomaly.
+
+* Redundency :- it happen when same data is stored multiple times.
+
+* Anomaly :- when we have to insert,update or delete some data but there are multiple row then confusion 	     may happen,that occur when the database is not normalized this situation is known as 	     anomaly.

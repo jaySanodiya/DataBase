@@ -1,0 +1,50 @@
+--------Explain the 3NF with an example.--------
+
+
+* 3NF is third normalise form. 
+
+* conditions for database to be in 3NF is 
+	1. It should be in 2NF
+	2. Any Transitive functional dependency of non prime atribut with super key must be removed.
+
+* Transitive functional dependency :- if X is dependent on Y and Y is dependent on Z then we can say 	that X is indirectly dependent on Z also this is known as transitive functional dependency.
+	Example :- if A is cousin of B and B is cousin of C then A and C are also cousins.
+
+* Non prime attribute :- attributes of candidate key, are called prime attributes. And rest of the 	attributes of the relation are non prime. E.g. for the relation {rollno, name, city, phoneNo} 		{rollno}   is a candidate key and hence rollno is a prime attribute and name, city, phoneno are 		non prime attributes.
+
+* Example of 3NF :--  This is the table who is already in 2NF 
+
+		|  cust_Id  |  cust_name  |  Shipping_Address  |  NewsLetter     |
+                |           |             |		       |	         |
+		|  jay_sk   |   jay   	  |    seoni	       |   X-box News    |
+                |  rohit_dv |   rohit     |    bhopal	       |  play_station   |
+		|  roger_ad |   roger     |    mumbai          |   X-box News    |
+		|  jay_sk   |   jay   	  |    seoni	       |   play_station  |
+
+             To convert it into 3NF we have to divide this table into two table as follow
+
+		Table 1 with cust_Id as primary key
+              
+		|  cust_Id  |  cust_name  |  Shipping_Address  |
+                |           |             |		       |
+		|  jay_sk   |   jay   	  |    seoni	       |
+                |  rohit_dv |   rohit     |    bhopal	       |
+		|  roger_ad |   roger     |    mumbai          |
+		
+
+		Table 2 with cust_Id as primary key
+
+		|  cust_Id  |    NewsLetter   |
+                |           |          	      |
+		|  jay_sk   |    X-box News   |
+                |  rohit_dv |  play_station   |
+		|  roger_ad |    X-box News   |
+		|  jay_sk   |   play_station  |
+
+
+
+
+
+
+
+
