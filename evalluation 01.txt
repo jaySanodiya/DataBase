@@ -1,3 +1,10 @@
+Problem 1: (marks 20)
+
+answer :--
+select s1.name, friends.friends_id , p1.salary from students as s1 join students as s2  join friends join packages as p1 on s1.name != s2.name and friends.id = s1.id and friends.friends_id = s2.id and ((select salary from packages join students on s1.id = p1.id order by p1.id limit 1) < (select salary from packages as p2 join friends on friends.friends_id = p2.id order by p1.id limit 1) );
+
+
+-------------------------------------------------------------------------------------------------
 
 Problem 2: (marks 6)
 What is the 3NF? Explain with an example. You don’t need to draw the
@@ -44,16 +51,28 @@ answer :---
                 |  rohit_dv |  play_station   |
 		|  roger_ad |    X-box News   |
 		|  jay_sk   |   play_station  |
---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 Problem 3: (marks 4)
 Briefly explain what a transaction is along with the ACID properties.
 
 answer ---
 
+* Transaction is sequence of operation performed on a database as a single logical unit of work.
+
+* Database transaction must have these properties :-- atomic, isolated, consistent and durable i,e ACID.
+
+   **atomic :- A transaction either completed with all of its data modification or non of them 				is performed.
+ 
+   **Consistent :- At the end of the transaction , all data must be in consistent state.
+
+   **isolated :- Modification of data performed by a trannsaction must be independent of another 				transaction.  
+
+   **Durable :- When the transsaction is completed, modification performed state will be on permanent in 		the system.
 
 
 
----------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------
 
 Problem 4: (marks 10)
 
