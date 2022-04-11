@@ -1,0 +1,54 @@
+--------DB schema design----------
+
+
+Apartments (AptId , UnitNum, BuldId)
+Building (b_Id , comId, BuildName, Add)
+Tenents ( T_Id, T_Name)
+Requests (Req_Id, status, ApdId, Description)
+Complexs (CompId, CompName)
+AptTenants (Id, AptId, TenId)
+
+Tenenets (M)<-----------(M) Apartments ;
+Apartments (1)<----------> (M) Request;
+complex (1)<------------> (M) Building;
+Building (1)<------------> (M) Apartments;
+
+
+
+create table Complexes( ComplexId int, ComplexName varchar(25), primary key(ComplexId) );
+
+create table Building( BuildingId int, BuildingName varchar(25),Address varchar (25),ComplexId int, primary key(BuildingId), foreign key ( ComplexId ) references Complexes(ComplexId ));
+
+
+create table Apartments(AptId int, UnitNumber varchar(25), BulidingId int,primary key(AptId), foreign key (BuildingId) references Building(BuildingId) );
+
+
+
+create table Requests(RequestId int, Status varchar(25), AptId int, Description varchar(25),primary key(RequestId), foreign key (AptId) references Apartments(AptId) );
+
+create table Tenents(TenentId int, TenentName varchar(25), primary key(TenentId));
+
+create table AptTenants(Id int, AptId int,TenantId  int, primary key(Id), foreign key (AptId) references Apartments(AptId), foreign key (TenantId) references Tenents (TenantId));
+
+
+// question 1 :
+Query to get list of tenants who rent more then one apartment :----
+
+
+//answer
+select tenents.tenentName from tenents, apttenants as t1, apttenants as t2 where t1.tenantId != t2.tenantId and t1.AptId = t2.AptId and t2.tenantId = tenents.tenentId;
+
+
+//question 2 :
+Query to get list of all buildings and the number of open requests (Request.status = pending) :--
+
+//answer
+
+
+
+
+//question 3 :
+Query to close all the request from apartments in building 2004;
+
+//answer
+update requests, apartments,building set requests.status = 'close' where requests.AptId = apartments.AptId and apartments.BuildingId = building.buildingId and building.buildingId = 2004;
