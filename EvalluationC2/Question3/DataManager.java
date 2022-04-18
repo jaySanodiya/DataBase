@@ -1,6 +1,6 @@
 package com.masai.EvalluationC2.Question3;
 
-// In this example "Interface Segrigation Principle" is voilated.
+// In this example "Liscov’s Substitution principle" is voilated.
 // here is the modification of the given code
 
 public interface DataManager {
