@@ -1,0 +1,53 @@
+---------------------Solid Principles---------------
+
+
+1. Single-responsibility principle
+
+* One function should do only one work. Like if we have to add balance in an account, deduct   some   balance from an account or increase the limit of that account then we should have 3 different function   to do these 3 jobs because after some day if we want to deduct some balance but for some reason   balance is not deducting then we can directly check the function which is responsible for deduction   the amount. Otherwise we have to go through every single line of code which will be more hactic.
+
+code :-- ********* Dirty code **************
+
+class Main{
+
+	public static void main(String[] args){
+		// code for deducting amount
+		// code for adding balance
+		// code for increasing the limit of account
+	}
+}
+
+     *********** Clean code*********
+
+class Main{
+	
+	void AddSomeAmount(){
+		// code for adding balance	
+	}
+
+	void DeductSomeAmount(){
+		// code for deducting balance	
+	}
+
+	void IncreaseLimit(){
+		// code for increasing the limit of account
+	}
+
+	public static void main(String[] args){
+		Main objectMain = new Main();
+		objectMain.AddSomeAmount;
+		objectMain.DeductSomeAmount;
+		objectMain.IncreaseLimit;
+	}
+}
+
+2. Open-closed principle
+
+* Our code should be open for extension but closed for modification.
+* Whenever we write any class someone may want to add some more features in our class at some point of     time and we don't want him/her to change or modify our class at all, but when that modification is   important we have to do something so we can extend our class instead of changing anything inside our   class.
+* That's why our code should be open for extensions.
+* So what can happen if someone modify our code ?, whole code may be stops working or it can chane it's   behaviour for some specific inputs.
+* That's why code should be close for modification.
+
+code :-- ********* Dirty code **************
+
+
