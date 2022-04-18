@@ -1,6 +1,6 @@
 Problem 1: (marks 20)
 
-answer :--
+answer :---
 select s1.name, friends.friends_id , p1.salary from students as s1 join students as s2  join friends join packages as p1 on s1.name != s2.name and friends.id = s1.id and friends.friends_id = s2.id and ((select salary from packages join students on s1.id = p1.id order by p1.id limit 1) < (select salary from packages as p2 join friends on friends.friends_id = p2.id order by p1.id limit 1) );
 
 
