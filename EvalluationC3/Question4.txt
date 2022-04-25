@@ -1,0 +1,330 @@
+Question 1 : 
+
+// We want to design a social media application which allows me to connect to my
+friends on all four social platforms i.e. Facebook, Google Plus, Twitter and Orkut (for
+example sake). Now I want that client to be able to tell the name of friend and
+desired platform – then my application should connect to him transparently.
+More importantly, if I want to add more social platforms into an application then
+application code should accommodate it without breaking the design
+
+//Demo.java
+
+package com.masai.SocialMedia;
+
+public class Demo {
+    public static void main(String[] args) {
+// any social media strategy.
+        SocialMediaContext context = new SocialMediaContext();
+// Setting Facebook strategy.
+        context.setSocialmediaStrategy(new FacebookStrategy());
+        context.connect("Lokesh");
+// Setting Twitter strategy.
+        context.setSocialmediaStrategy(new TwitterStrategy());
+        context.connect("Lokesh");
+// Setting GooglePlus strategy.
+        context.setSocialmediaStrategy(new GooglePlusStrategy());
+        context.connect("Lokesh");
+// Setting Orkut strategy.
+        context.setSocialmediaStrategy(new OrkutStrategy());
+        context.connect("Lokesh");
+    }
+
+}
+
+
+//SocialMediaContext.java
+
+package com.masai.SocialMedia;
+
+public class SocialMediaContext {
+    SocialmediaStrategy socialmediaStrategy;
+
+    public void setSocialmediaStrategy(SocialmediaStrategy socialmediaStrategy) {
+        this.socialmediaStrategy = socialmediaStrategy;
+    }
+
+    public void connect(String name){
+        socialmediaStrategy.connect(name);
+    }
+}
+
+
+//SocialmediaStrategy.java;
+
+package com.masai.SocialMedia;
+
+public interface SocialmediaStrategy {
+    public void connect(String name);
+}
+
+
+// FacebookStrategy.java
+
+package com.masai.SocialMedia;
+
+public class FacebookStrategy implements SocialmediaStrategy {
+    @Override
+    public void connect(String name) {
+        System.out.println("Connecting with "+name+ " through Facebook");
+    }
+}
+
+
+// TwitterStrategy.java
+
+package com.masai.SocialMedia;
+
+public class TwitterStrategy implements SocialmediaStrategy {
+    @Override
+    public void connect(String name) {
+        System.out.println("Connecting with "+name+ " through Twitter");
+    }
+}
+
+// OrkutStrategy.java
+
+package com.masai.SocialMedia;
+
+public class OrkutStrategy implements SocialmediaStrategy {
+    @Override
+    public void connect(String name) {
+        System.out.println("Connecting with "+name+ " through Orkut");
+    }
+}
+
+// GooglePlusStrategy.java
+
+package com.masai.SocialMedia;
+
+public class GooglePlusStrategy implements SocialmediaStrategy {
+    @Override
+    public void connect(String name) {
+        System.out.println("Connecting with "+name+ " through GooglePlus");
+    }
+}
+
+====================================================================================================
+Question 2 :
+
+// Design an online book reader system.
+that provides the following functionality:
+• Searching the database of books and reading a book.
+• User membership creation and extension.
+• Only one active user at a time and only one active book by this user
+
+Answer :-
+
+//BookReader.java
+
+package com.masai.BookReader;
+
+import java.util.List;
+
+public class BookReader {
+
+}
+
+enum Subject {PHYSICS, CHEMISTRY, MATHS}
+enum UserStatus {READING, NOT_READING}
+enum BookStatus {READING, NOT_READING}
+enum DatabaseStatus{AVAILABLE, NOT_AVAILABLE}
+enum MembershipStatus {YES, NO}
+
+
+class Book{
+    private String name;
+    private String authorName;
+    private Subject subject;
+    private int bookId;
+    private BookStatus bookStatus;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public BookStatus getBookStatus() {
+        return bookStatus;
+    }
+
+    public void setBookStatus(BookStatus bookStatus) {
+        this.bookStatus = bookStatus;
+    }
+}
+class User{
+    private String name;
+    private int userId;
+    private UserStatus userStatus;
+    MembershipStatus membershipStatus = MembershipStatus.NO;
+    private int membershipPeriodInYears = 0;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public UserStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public MembershipStatus getMembershipStatus() {
+        return membershipStatus;
+    }
+
+    public void setMembershipStatus(MembershipStatus membershipStatus) {
+        this.membershipStatus = membershipStatus;
+    }
+
+    public int getMembershipPeriodInYears() {
+        return membershipPeriodInYears;
+    }
+
+    public void setMembershipPeriodInYears(int membershipPeriodInYears) {
+        this.membershipPeriodInYears = membershipPeriodInYears;
+    }
+
+}
+class Database{
+    private static List<User> users;
+    private static List<Book> books;
+    private DatabaseStatus databaseStatus;
+
+
+    public int searchBook(String name){ //provide author name or bookName
+
+        for(Book b : books){
+            if(b.getName() ==name || b.getAuthorName()==name){
+                return b.getBookId();// returning id of book;
+            }
+        }
+
+        return -1; // no such book exist
+    }
+
+    public String readBook(int bookId,User user){
+        if(databaseStatus==DatabaseStatus.NOT_AVAILABLE)
+            return "SomeOne is already reading using database";
+        Book b1 = null;
+        for(Book b : books){
+            if(b.getBookId() ==bookId){
+                b1 = b;
+            }
+        }
+        b1.setBookStatus(BookStatus.READING);
+        user.setUserStatus(UserStatus.READING);
+
+        databaseStatus = DatabaseStatus.NOT_AVAILABLE;
+        return "Started reading...";
+    }
+
+    public void createMembership(int userId){
+        User u1 = null;
+        for(User u : users){
+            if(u.getUserId() == userId){
+                u.membershipStatus = MembershipStatus.YES;
+                u.setMembershipPeriodInYears(u.getMembershipPeriodInYears()+1);
+            }
+        }
+    }
+
+    public void  extendMembership(int userId){
+        User u1 = null;
+        for(User u : users){
+            if(u.getUserId() == userId){
+                u.setMembershipPeriodInYears(u.getMembershipPeriodInYears()+1);
+            }
+        }
+    }
+
+}
+
+===================================================================================================
+Question 3 :
+
+ // Create a spring project which can calculate the area of the different geometric
+shapes: circle, triangle, rectangle, square,etc.
+● Use Presentation layer and service layer to separate the display and business
+logic.
+● And you have to configure spring IOC for dependency injection
+
+
+
+
+
+=====================================================================================================
+Question 4 :
+
+A. What do you mean by IoC (Inversion of Control) Container?
+
+Answer : When a class is dependent on another class, the dependent class has to create object of 	dependency class to call the method . But when some external entity is taking care of creating 	the dependency object then we say that control is inverted to some external entity, this is 	called Inversion of Control (IOC).
+
+
+
+B. What are Spring Beans?
+
+Answer : All normal class  which will be registered with the "Spring container software" is known as 		Spring bean. (it is a POJO class)
+
+
+C. What are the bean scopes available in Spring?
+
+Answer : Spring defines 4 scopes for a bean:
+	1. singleton scope (it is a default scope of spring bean)
+	2. prototype scope
+	3. request scope	
+	4. session scope
+
+
+D. What is autowiring and name the different modes of it.What are the limitations of autowiring?
+
+Answer :When we create bean tag in our .xml file autowiring is set as default (no) by default. 	With 	autowiring we don't have to write type of injection inside bean tag, we just have to 	mention 	type of autowiring inside bean tag explicitly. 
+
+ 	Different Mode :-- 1. no (default),
+			   2. byName,
+			   3. bytype,
+			   4. constructor
+	Spring container automatically injects a bean dependencies by either calling a setter method or 		calling parameterized constructor without writing explicitly inside the spring configuration 		file.
+
+	Limitation :-- We can only define object not simple dipendencies and here chances of ambiquities 	is also there.
+
